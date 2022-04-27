@@ -45,10 +45,13 @@ you can create initial super-user with next commad:
 ```
 
 ## API Docs
-login by visiting this [link](http://localhost:8001). 
+login by visiting this [link](http://0.0.0.0::8001). 
 
-API documentation is automatically generated using Swagger. You can view documention by visiting this [link](http://localhost:8001/docs).
+API documentation is automatically generated using Swagger. You can view documention by visiting this [link](http://0.0.0.0:8001/docs).
 
+## get Data Records
+
+http://0.0.0.0:8001/met_office/get_records
 
 ## for Post man
 Genrate token using this endpoint at swagger
@@ -66,7 +69,7 @@ Authorization: Bearer 'paste token here'
 ## Add more user
 
 ```bash
-http://localhost:8001/api/v1/users/
+http://0.0.0.0::8001/api/v1/users/
 ```
 ## run unit tests
 Enter in container 
