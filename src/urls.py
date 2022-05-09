@@ -40,6 +40,8 @@ urlpatterns = [
     
     # Met Office
     path('met_office/get_records', MetOfficeViewSet.get_records, name='get_records'),
+    url(r'^met_office/get_records_from_db/(?P<region_id>\d+)/(?P<parameter_id>\d+)/$', MetOfficeViewSet.get_records_from_db, name='get_records_from_db'),
+    path('met_office/save_records', MetOfficeViewSet.save_records, name='save_records'),
 
     path('docs/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     
