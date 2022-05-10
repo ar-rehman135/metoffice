@@ -9,7 +9,7 @@ from drf_yasg import openapi
 from src.met_office.services.data_parser import DataParser
 from src.met_office.services.met_office import Met_Office_Data
 from .models import Regions, WeatherData,Parameters, ParametersValues
-from .serializers import RegionsSerializer, WeatherSerializer
+from .serializers import RegionsSerializer, WeatherSerializer,ParametersValuesSerializer
 from pprint import pprint
 
 class MetOfficeViewSet():
@@ -55,20 +55,15 @@ class MetOfficeViewSet():
         
         return Response(serializer.data, status=status.HTTP_201_CREATED)   
           
-    @swagger_auto_schema(methods=['GET'])
+    @swagger_auto_schema(methods=['GET'],responses={200: ParametersValuesSerializer})
     @api_view(['GET'])
     def get_records_from_db(request, region_id, parameter_id):
-        print("region_id",region_id)
-        print("parameter_id",parameter_id)
         
         p = []
         parameter_values = ParametersValues.objects.filter(parameter_id=parameter_id).filter(weather_id__region_id=region_id).all()
-        for para in parameter_values:
-            di = {"month":para.weather_id.month_season,"year":para.weather_id.year,"value":para.value}
-            p.append(di)
-        
-        return Response(p,status=200)
-
+        serializer = ParametersValuesSerializer(parameter_values,many=True)
+          
+        return JsonResponse({'data': serializer.data})
 
      
     
