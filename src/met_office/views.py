@@ -55,16 +55,19 @@ class MetOfficeViewSet():
         
         return Response(serializer.data, status=status.HTTP_201_CREATED)   
           
-    
     @swagger_auto_schema(methods=['GET'])
     @api_view(['GET'])
     def get_records_from_db(request, region_id, parameter_id):
         print("region_id",region_id)
         print("parameter_id",parameter_id)
-
-        parameter_values = ParametersValues.objects.filter(parameter_id=parameter_id).filter(weather_id__region_id=region_id).all()
         
-        return Response(list(parameter_values.values()),status=200)
+        p = []
+        parameter_values = ParametersValues.objects.filter(parameter_id=parameter_id).filter(weather_id__region_id=region_id).all()
+        for para in parameter_values:
+            di = {"month":para.weather_id.month_season,"year":para.weather_id.year,"value":para.value}
+            p.append(di)
+        
+        return Response(p,status=200)
 
 
      
